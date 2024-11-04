@@ -1,0 +1,699 @@
+{
+	"info": {
+		"_postman_id": "0cd969d8-6563-4e2c-9a71-426dfc742418",
+		"name": "КнигиРум",
+		"description": "Коллекция для тестирования Book Storage API проекта КнигиРум",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38500306"
+	},
+	"item": [
+		{
+			"name": "book",
+			"item": [
+				{
+					"name": "/books?",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// pm.test(\"Проверка значений в теле ответа\", function () {",
+									"//     var jsonData = pm.response.json();",
+									"//     pm.expect(jsonData.products[0].id).to.eql(2);",
+									"//     pm.expect(jsonData.products[0].title).to.eql(\"Оно\");",
+									"//     pm.expect(jsonData.products[0].author).to.eql(\"Стивен Кинг\");",
+									"//     pm.expect(jsonData.products[0].price).to.eql(710);",
+									"// });",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"// pm.test(\"Offset сдвигает товары на 2\", function () {",
+									"//     var jsonData = pm.response.json();",
+									"//     pm.expect(jsonData.products[0].id).to.eql(3);",
+									"// });",
+									"",
+									"// pm.test(\"Количество книг = 3\", function () {",
+									"//     var jsonData = pm.response.json();",
+									"//     pm.expect(jsonData.products.length).to.eql(3);",
+									"// });",
+									"",
+									"// структура ответа",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"products\": {",
+									"      \"type\": \"array\",",
+									"      \"items\": [",
+									"        {",
+									"          \"type\": \"object\",",
+									"          \"properties\": {",
+									"            \"id\": {",
+									"              \"type\": \"integer\"",
+									"            },",
+									"            \"title\": {",
+									"              \"type\": \"string\"",
+									"            },",
+									"            \"author\": {",
+									"              \"type\": \"string\"",
+									"            },",
+									"            \"price\": {",
+									"              \"type\": \"integer\"",
+									"            },",
+									"            \"author_bio\": {",
+									"              \"type\": \"string\"",
+									"            }",
+									"          },",
+									"          \"required\": [",
+									"            \"id\",",
+									"            \"title\",",
+									"            \"author\",",
+									"            \"price\",",
+									"            \"author_bio\"",
+									"          ]",
+									"        }",
+									"      ]",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"products\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrlKnigirum}}/books",
+							"host": [
+								"{{baseUrlKnigirum}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3",
+									"description": "Results count in page",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "2",
+									"description": "Shift counted by amount of elements",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "title",
+									"description": "Sorting column",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "ASC",
+									"description": "Sorting",
+									"disabled": true
+								},
+								{
+									"key": "minPrice",
+									"value": "0",
+									"description": "Min price",
+									"disabled": true
+								},
+								{
+									"key": "maxPrice",
+									"value": "1000",
+									"description": "Max price",
+									"disabled": true
+								},
+								{
+									"key": "string",
+									"value": "Оно",
+									"description": "Contains substring in title or author",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/book/{book_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Проверка значений в теле ответа\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(1);",
+									"    pm.expect(jsonData.title).to.eql(\"Темная башня\");",
+									"    pm.expect(jsonData.author).to.eql(\"Стивен Кинг\");",
+									"    pm.expect(jsonData.price).to.eql(680);",
+									"});",
+									"",
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"// структура ответа",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"id\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"title\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"author\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"price\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"author_bio\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"description\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"reviews_count\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"id\",",
+									"    \"title\",",
+									"    \"author\",",
+									"    \"price\",",
+									"    \"author_bio\",",
+									"    \"description\",",
+									"    \"reviews_count\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrlKnigirum}}/book/1",
+							"host": [
+								"{{baseUrlKnigirum}}"
+							],
+							"path": [
+								"book",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "review",
+			"item": [
+				{
+					"name": "/review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"let reviewId = pm.response.json().review_id",
+									"pm.environment.set(\"reviewId\", reviewId);",
+									"",
+									"// проверка структуры ответа",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"review_id\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"total_count\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"review_id\",",
+									"    \"total_count\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Генерируем случайные тестовые данные ",
+									"let randBookId = Math.floor(1 + Math.random() * (50 + 1 - 1));",
+									"let randName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let randText = pm.variables.replaceIn('{{$randomLoremSentence}}');",
+									"let randRecommended = pm.variables.replaceIn('{{$randomBoolean}}');",
+									"",
+									"//Записываем данные в переменные окружения ",
+									"pm.environment.set(\"randBookId\", randBookId);",
+									"pm.environment.set(\"randName\", randName);",
+									"pm.environment.set(\"randText\", randText);",
+									"pm.environment.set(\"randRecommended\", randRecommended);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"book_id\": {{randBookId}},\n  \"author_name\": \"{{randName}}\",\n  \"recommended\": {{randRecommended}},\n  \"text\": \"{{randText}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrlKnigirum}}/review",
+							"host": [
+								"{{baseUrlKnigirum}}"
+							],
+							"path": [
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/reviews/{book_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.test(\"Значение в total_count равно количеству отзывов\", function () {",
+									"//     var jsonData = pm.response.json();",
+									"//     var countReviews = jsonData.reviews.length;",
+									"",
+									"//     console.log(countReviews)",
+									"//     console.log(jsonData.total_count)",
+									"    ",
+									"//     pm.expect(jsonData.total_count).to.eql(countReviews);",
+									"// });",
+									"",
+									"",
+									"",
+									"// проверка структуры ответа",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"reviews\": {",
+									"      \"type\": \"array\",",
+									"      \"items\": [",
+									"        {",
+									"          \"type\": \"object\",",
+									"          \"properties\": {",
+									"            \"review_id\": {",
+									"              \"type\": \"integer\"",
+									"            },",
+									"            \"author_name\": {",
+									"              \"type\": \"string\"",
+									"            },",
+									"            \"recommended\": {",
+									"              \"type\": \"boolean\"",
+									"            },",
+									"            \"text\": {",
+									"              \"type\": \"string\"",
+									"            }",
+									"          },",
+									"          \"required\": [",
+									"            \"review_id\",",
+									"            \"author_name\",",
+									"            \"recommended\",",
+									"            \"text\"",
+									"          ]",
+									"        }",
+									"      ]",
+									"    },",
+									"    \"total_count\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"reviews\",",
+									"    \"total_count\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});",
+									"",
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let bookId = 1",
+									"pm.environment.set(\"bookId\", bookId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrlKnigirum}}/reviews/{{bookId}}",
+							"host": [
+								"{{baseUrlKnigirum}}"
+							],
+							"path": [
+								"reviews",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/review/{reviews_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Получаем значения переменных окружения",
+									"let authorName = pm.environment.get(\"randName\");",
+									"let reviewId = pm.environment.get(\"reviewId\");",
+									"let text = pm.environment.get(\"randText\");",
+									"let recommended = JSON.parse(pm.environment.get(\"randRecommended\"));",
+									"",
+									"//Сравниваем значения из тела ответа и из окружения",
+									"pm.test(\"Проверка значений в теле ответа\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(jsonData)",
+									"    pm.expect(jsonData.author_name).to.eql(authorName);",
+									"    pm.expect(jsonData.review_id).to.eql(reviewId);",
+									"    pm.expect(jsonData.text).to.eql(text);",
+									"    pm.expect(jsonData.recommended).to.eql(recommended);",
+									"});",
+									"",
+									"//Удаляем переменные окружения",
+									"pm.environment.unset(\"randName\");",
+									"pm.environment.unset(\"reviewId\");",
+									"pm.environment.unset(\"randText\");",
+									"pm.environment.unset(\"randRecommended\");",
+									"",
+									"//проверка структуры ответа",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"review_id\": {",
+									"      \"type\": \"integer\"",
+									"    },",
+									"    \"author_name\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"recommended\": {",
+									"      \"type\": \"boolean\"",
+									"    },",
+									"    \"text\": {",
+									"      \"type\": \"string\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"review_id\",",
+									"    \"author_name\",",
+									"    \"recommended\",",
+									"    \"text\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});",
+									"",
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrlKnigirum}}/review/{{reviewId}}",
+							"host": [
+								"{{baseUrlKnigirum}}"
+							],
+							"path": [
+								"review",
+								"{{reviewId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/review/{reviews_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let newText = pm.variables.replaceIn('{{$randomLoremSentence}}');",
+									"pm.environment.set(\"newText\", newText)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"{{newText}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrlKnigirum}}/review/{{reviewId}}",
+							"host": [
+								"{{baseUrlKnigirum}}"
+							],
+							"path": [
+								"review",
+								"{{reviewId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/review/{reviews_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrlKnigirum}}/review/1",
+							"host": [
+								"{{baseUrlKnigirum}}"
+							],
+							"path": [
+								"review",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "promo",
+			"item": [
+				{
+					"name": "/promocodes/{promo_code}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Размер скидки = 10\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.promo_discount).to.eql(10);",
+									"});",
+									"",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"promo_discount\": {",
+									"      \"type\": \"integer\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"promo_discount\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});",
+									"",
+									"pm.test(\"Время ответа 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let promoCode = summer",
+									"pm.environment.set(\"promoCode\", promoCode);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrlKnigirum}}/promocodes/{{promoCode}}",
+							"host": [
+								"{{baseUrlKnigirum}}"
+							],
+							"path": [
+								"promocodes",
+								"{{promoCode}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
