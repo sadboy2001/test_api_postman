@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "19435197-5693-4d14-b025-8e6e44c46f71",
+		"name": "QACoin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38500306"
+	},
+	"item": [
+		{
+			"name": "current",
+			"item": [
+				{
+					"name": "/qacoin/current-rate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"// структура ответа",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"current_date\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"qacoin_to_eur\": {",
+									"      \"type\": \"number\"",
+									"    },",
+									"    \"qacoin_to_usd\": {",
+									"      \"type\": \"number\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"current_date\",",
+									"    \"qacoin_to_eur\",",
+									"    \"qacoin_to_usd\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{qacoin}}/qacoin/current-rate",
+							"host": [
+								"{{qacoin}}"
+							],
+							"path": [
+								"qacoin",
+								"current-rate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/qacoin/convert-to-qacoin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"qacoin_amount\": {",
+									"      \"type\": \"number\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"qacoin_amount\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});",
+									"",
+									"pm.environment.unset(\"randomNumber\")",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let num = Math.floor(1 + Math.random() * (100 + 1 - 1))",
+									"pm.environment.set(\"randomNumber\", num)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": {{randomNumber}},\n  \"currency\": \"EUR\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{qacoin}}/qacoin/convert-to-qacoin",
+							"host": [
+								"{{qacoin}}"
+							],
+							"path": [
+								"qacoin",
+								"convert-to-qacoin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/qacoin/convert-to-currency",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"converted_amount\": {",
+									"      \"type\": \"number\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"converted_amount\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});",
+									"",
+									"pm.environment.unset(\"randomNumber\")",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let num = Math.floor(1 + Math.random() * (100 + 1 - 1))",
+									"pm.environment.set(\"randomNumber\", num)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"qacoin_amount\": {{randomNumber}},\n  \"currency\": \"USD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{qacoin}}/qacoin/convert-to-currency",
+							"host": [
+								"{{qacoin}}"
+							],
+							"path": [
+								"qacoin",
+								"convert-to-currency"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "history",
+			"item": [
+				{
+					"name": "/qacoin/history",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"let validSchema = {",
+									"  \"type\": \"array\",",
+									"  \"items\": [",
+									"    {",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"date\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"rate_to_eur\": {",
+									"          \"type\": \"number\"",
+									"        },",
+									"        \"rate_to_usd\": {",
+									"          \"type\": \"number\"",
+									"        }",
+									"      },",
+									"      \"required\": [",
+									"        \"date\",",
+									"        \"rate_to_eur\",",
+									"        \"rate_to_usd\"",
+									"      ]",
+									"    }",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{qacoin}}/qacoin/history",
+							"host": [
+								"{{qacoin}}"
+							],
+							"path": [
+								"qacoin",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/qacoin/rate/{date}",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let date = \"2024-11-05\"",
+									"pm.environment.set(\"date\", date)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"rate_to_eur\": {",
+									"      \"type\": \"number\"",
+									"    },",
+									"    \"rate_to_usd\": {",
+									"      \"type\": \"number\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"rate_to_eur\",",
+									"    \"rate_to_usd\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{qacoin}}/qacoin/rate/{{date}}",
+							"host": [
+								"{{qacoin}}"
+							],
+							"path": [
+								"qacoin",
+								"rate",
+								"{{date}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "currency",
+			"item": [
+				{
+					"name": "/currency/rates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"usd_to_eur\": {",
+									"      \"type\": \"number\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"usd_to_eur\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{qacoin}}/currency/rates",
+							"host": [
+								"{{qacoin}}"
+							],
+							"path": [
+								"currency",
+								"rates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/currency/convert",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Код ответа 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Время ответа меньше 200мс\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"let validSchema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"converted_amount\": {",
+									"      \"type\": \"number\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"converted_amount\"",
+									"  ]",
+									"}",
+									"pm.test('Структура ответа соответствует схеме', function() {",
+									"    pm.response.to.have.jsonSchema(validSchema);",
+									"});",
+									"",
+									"pm.environment.unset(\"randomNumber\")",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let num = Math.floor(1 + Math.random() * (100 + 1 - 1))",
+									"pm.environment.set(\"randomNumber\", num)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 100,\n  \"from_currency\": \"EUR\",\n  \"to_currency\": \"USD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{qacoin}}/currency/convert",
+							"host": [
+								"{{qacoin}}"
+							],
+							"path": [
+								"currency",
+								"convert"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
